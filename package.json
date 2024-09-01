@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "build": "ts-node src/main.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.0.0",
+    "@types/node": "^22.5.1",
+    "eslint": "^9.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
