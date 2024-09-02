@@ -14,17 +14,27 @@
 
         #app {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            /* border: 1px solid #003aff; */
+        }
+
+        #content p {
+            width: 720px;
+            margin-top: 4px;
+        }
+
+        #tip {
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <div id="app">
-
-    </div>
-    <div style="display: flex;justify-content: center;margin: 10px;">
-        <span style="color: #999;">数据接口: <strong>https://60s.viki.moe/60s?v2=1</strong></span>
+    <div style="display: flex;justify-content: center;">
+        <div id="app">
+            <img id="image" alt="60s" width="720px" />
+            <div id="content"></div>
+        </div>
     </div>
     <script>
         fetch('https://60s.viki.moe/60s?v2=1')
@@ -36,21 +46,17 @@
             })
             .then(data => data.data)
             .then(data => {
-                console.log(data)
-                const appDiv = document.getElementById('app')
                 const { news, tip, cover } = data
-                const len = news.length
-                const totalHeight = 400 + (len + 1) * 30;
-                let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="720" height="${totalHeight}">`
-                svg += `<rect width="720" height="${totalHeight}" fill="white" stroke="#03a1ea" stroke-width="1" />`
-                svg += `<image width="720" height="400" href="${cover}" />`
-                for (let i = 0; i < len; i++) {
-                    const text = news[i].substring(0, 40)
-                    svg += `<text x="5" y="${420 + i * 30}" font-family="Arial" font-size="16" fill="blue">${text}</text>`
+                const img = document.getElementById('image')
+                img.setAttribute("src", cover)
+                let content = ''
+                for (let i = 0; i < news.length; i++) {
+                    const text = news[i]
+                    content += `<p>${new String(i + 1).padStart(2, '0')}、${text}</p>`
                 }
-                svg += `<text x="50%" y="${420 + len * 30}" font-family="Arial" font-size="16" fill="red" text-anchor="middle" dominant-baseline="middle" >【微语】${tip}</text>`
-                svg += `</svg>`
-                appDiv.innerHTML = svg
+                content += `<p id="tip">【微语】${tip}</p>`
+                const contentDiv = document.getElementById('content')
+                contentDiv.innerHTML = content
             })
             .catch(error => {
                 console.log('获取数据时出错: ', error)

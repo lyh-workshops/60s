@@ -1,8 +1,13 @@
 {
   "scripts": {
-    "build": "ts-node src/main.ts",
+    "build": "ts-node -r dotenv/config ./src/main.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "crossbell": "^1.12.0",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.0.0",
