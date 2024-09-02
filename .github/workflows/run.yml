@@ -18,11 +18,10 @@ jobs:
       - name: Install
         run: pnpm install
 
-      - env:
-        XLOG_TOKEN: ${{ secrets.XLOG_TOKEN }}
-        XLOG_CHARACTER_ID: ${{ secrets.XLOG_CHARACTER_ID }}
-
       - name: Run
+        env:
+          XLOG_TOKEN: ${{ secrets.XLOG_TOKEN }}
+          XLOG_CHARACTER_ID: ${{ secrets.XLOG_CHARACTER_ID }}
         run: |
           pnpm run build
 
