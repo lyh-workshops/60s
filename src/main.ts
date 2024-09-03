@@ -20,6 +20,8 @@ async function getData() {
 async function main() {
   const data = await getData()
   const { news, tip, cover, updated } = data
+  const title = `【${dayjs.unix(Number(updated) / 1000).format('YYYY-MM-DD')}】每天 60 秒读懂世界`
+  console.log(title)
   const updatedTime = String(updated)
   if (fs.existsSync('updated')) {
     const content = fs.readFileSync('updated', 'utf8')
@@ -33,8 +35,6 @@ async function main() {
   else {
     fs.writeFileSync('updated', updatedTime, { encoding: 'utf8' })
   }
-  const title = `【${dayjs.unix(Number(updated) / 1000).format('YYYY-MM-DD')}】每天 60 秒读懂世界`
-  console.log(title)
   let content = ''
   for (let i = 0; i < news.length; i++) {
     const text = `【${i + 1}】${news[i]}`

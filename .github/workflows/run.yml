@@ -1,7 +1,7 @@
 name: 60s
 on:
-  # schedule:
-  #   - cron: '0 */6 * * *'
+  schedule:
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -24,6 +24,7 @@ jobs:
           XLOG_CHARACTER_ID: ${{ secrets.XLOG_CHARACTER_ID }}
         run: |
           pnpm run build
+          echo "Current date and time: $(date +"%Y-%m-%d %H:%M:%S")"
 
       - name: Push
         run: |
