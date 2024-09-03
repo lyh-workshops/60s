@@ -33,7 +33,7 @@ async function main() {
   else {
     fs.writeFileSync('updated', updatedTime, { encoding: 'utf8' })
   }
-  const title = `【${dayjs(Number(updatedTime)).format('YYYY-MM-DD')}】每天 60 秒读懂世界`
+  const title = `【${dayjs.unix(Number(updated) / 1000).format('YYYY-MM-DD')}】每天 60 秒读懂世界`
   console.log(title)
   let content = ''
   for (let i = 0; i < news.length; i++) {
