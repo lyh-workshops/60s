@@ -20,12 +20,14 @@ async function getData() {
 async function main() {
   const data = await getData()
   const { news, tip, cover, updated } = data
-  const title = `【${dayjs.unix(Number(updated) / 1000).format('YYYY-MM-DD')}】每天 60 秒读懂世界`
+  // UTC +08:00
+  const title = `【${dayjs.unix(Number(updated) / 1000).add(8, 'hour').format('YYYY-MM-DD')}】每天 60 秒读懂世界`
   console.log(title)
   const updatedTime = String(updated)
   if (fs.existsSync('updated')) {
     const content = fs.readFileSync('updated', 'utf8')
     if (content === updatedTime) {
+      console.log(`Already up to date.`)
       return
     }
     else {
@@ -37,10 +39,10 @@ async function main() {
   }
   let content = ''
   for (let i = 0; i < news.length; i++) {
-    const text = `【${i + 1}】${news[i]}`
+    const text = `【${i + 1}】 ${news[i]}`
     content += text
   }
-  content += `【微语】${tip}`
+  content += `【微语】 ${tip}`
   console.log('---- sync xlog start ----')
   const photoUrlList: string[] = []
   photoUrlList.push(cover)
