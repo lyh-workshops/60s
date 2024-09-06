@@ -6,6 +6,9 @@ import { ipfsUploadFile } from 'crossbell/ipfs'
 export async function uploadPhotosToXLog(photoUrlList: string[]): Promise<string[]> {
   const attachmentUrlList = []
   for (const photoUrl of photoUrlList) {
+    if (photoUrl === '') {
+      continue
+    }
     const mediaData = await fetch(photoUrl).then(res => res.arrayBuffer())
     const file = new File([mediaData], 'mediaData')
     const url = (await ipfsUploadFile(file)).url
