@@ -43,12 +43,18 @@ async function main() {
     content += text
   }
   content += `【微语】 ${tip}`
-  console.log('---- sync xlog start ----')
-  const photoUrlList: string[] = []
-  photoUrlList.push(cover)
-  const attachmentUrlList = await uploadPhotosToXLog(photoUrlList)
-  await createShort(title, content, attachmentUrlList)
-  console.log('---- sync xlog end ----')
+  try {
+    console.log('---- sync xlog start ----')
+    const photoUrlList: string[] = []
+    photoUrlList.push(cover)
+    const attachmentUrlList = await uploadPhotosToXLog(photoUrlList)
+    await createShort(title, content, attachmentUrlList)
+    console.log('---- sync xlog end ----')
+  }
+  catch (error) {
+    console.log('同步失败')
+    console.error(error)
+  }
 }
 
 main()
