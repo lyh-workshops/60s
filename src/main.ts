@@ -4,6 +4,8 @@ import dayjs from 'dayjs'
 import { createShortByUrl, uploadPhotosToXLog } from './xlog'
 import { getData } from './60s'
 
+const DEFAULT_COVER = 'https://liuyuhe666.github.io/picx-images-hosting/20240911/00a629eaaf5c7e2bc050b1b4772b9364.4g4g2lkdzu.webp'
+
 async function main() {
   const data = await getData()
   const { news, tip, cover, updated } = data
@@ -32,7 +34,12 @@ async function main() {
   content += `【微语】${tip}`
   try {
     const photoUrlList: string[] = []
-    photoUrlList.push(cover)
+    if (cover) {
+      photoUrlList.push(cover)
+    }
+    else {
+      photoUrlList.push(DEFAULT_COVER)
+    }
     const attachmentUrlList = await uploadPhotosToXLog(photoUrlList)
     // await createShort(title, content, attachmentUrlList)
     await createShortByUrl(title, content, attachmentUrlList)

@@ -48,7 +48,11 @@
             .then(data => {
                 const { news, tip, cover } = data
                 const img = document.getElementById('image')
-                img.setAttribute("src", cover)
+                if (cover) {
+                    img.setAttribute("src", cover)
+                } else {
+                    img.setAttribute("src", './assets/60s.png')
+                }
                 let content = ''
                 for (let i = 0; i < news.length; i++) {
                     const text = news[i]
