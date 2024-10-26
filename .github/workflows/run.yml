@@ -1,7 +1,7 @@
 name: 60s
 on:
-  # schedule:
-  #   - cron: '0 */6 * * *'
+  schedule:
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -22,6 +22,8 @@ jobs:
         env:
           XLOG_TOKEN: ${{ secrets.XLOG_TOKEN }}
           XLOG_CHARACTER_ID: ${{ secrets.XLOG_CHARACTER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           pnpm run build
 

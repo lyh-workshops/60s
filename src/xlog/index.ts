@@ -91,3 +91,9 @@ export async function createShortByUrl(title: string, content: string, attachmen
     }),
   })
 }
+
+export async function sendToXlog(title: string, content: string, photoUrlList: string[]) {
+  const attachmentUrlList = await uploadPhotosToXLog(photoUrlList)
+  // await createShort(title, content, attachmentUrlList)
+  await createShortByUrl(title, content, attachmentUrlList)
+}

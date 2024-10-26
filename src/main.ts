@@ -1,10 +1,10 @@
 import console from 'node:console'
 import fs from 'node:fs'
 import dayjs from 'dayjs'
-import { createShortByUrl, uploadPhotosToXLog } from './xlog'
+import { sendToXlog } from './xlog'
 import { getData } from './60s'
-
-const DEFAULT_COVER = 'https://liuyuhe666.github.io/picx-images-hosting/20240911/00a629eaaf5c7e2bc050b1b4772b9364.4g4g2lkdzu.webp'
+import { DEFAULT_COVER, TG, XLOG } from './constants'
+import { sendToTelegram } from './telegram'
 
 async function main() {
   const data = await getData()
@@ -28,7 +28,7 @@ async function main() {
   }
   let content = ''
   for (let i = 0; i < news.length; i++) {
-    const text = `【${i + 1}】${news[i]}`
+    const text = `【${i + 1}】${news[i]}\n`
     content += text
   }
   content += `【微语】${tip}`
@@ -40,9 +40,12 @@ async function main() {
     else {
       photoUrlList.push(DEFAULT_COVER)
     }
-    const attachmentUrlList = await uploadPhotosToXLog(photoUrlList)
-    // await createShort(title, content, attachmentUrlList)
-    await createShortByUrl(title, content, attachmentUrlList)
+    if (XLOG) {
+      sendToXlog(title, content, photoUrlList)
+    }
+    if (TG) {
+      sendToTelegram(title, content, photoUrlList)
+    }
     console.log(`${title}: 同步成功`)
   }
   catch (error) {
